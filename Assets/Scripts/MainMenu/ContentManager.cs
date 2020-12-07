@@ -2,6 +2,10 @@
 using System;
 using TMPro;
 using System.Collections.Generic;
+using Microsoft.Win32;
+using UnityEngine.XR;
+using System.Net;
+using System.Linq;
 
 public class ContentManager : MonoBehaviour
 {
@@ -26,7 +30,7 @@ public class ContentManager : MonoBehaviour
     public int NumberOfCompletedCourses;
 
     public SearchField SearchField;
-    public GameObject ContentLoadingPanel;
+    public GameObject ContentLoadingPanel, SteamVRAppNotInstalledPanel, VRDeviceConectedPanel, InternetSpeedPanel;
 
     int totalDepartmentcourses;
     string CourseName;
@@ -42,17 +46,6 @@ public class ContentManager : MonoBehaviour
     {
         Instance = this;
 
-        //NumberOfAssignedCourses = UserData.Instance.UserDocument["assignedcourses"].AsBsonArray.ToList().Capacity;
-        //Debug.Log(NumberOfAssignedCourses);
-
-        //NumberOfPendingCourses = UserData.Instance.UserDocument["pendingcourses"].AsBsonArray.ToList().Capacity;
-        //Debug.Log(NumberOfPendingCourses);
-
-        //NumberOfCompletedCourses = UserData.Instance.UserDocument["completedcourses"].AsBsonArray.ToList().Capacity;
-        //Debug.Log(NumberOfCompletedCourses);
-
-        //ShowHomeScreenCourses();
-
         LoadAllAssignedCourses();
 
         ShowAllHomeScreenCourses();
@@ -67,33 +60,9 @@ public class ContentManager : MonoBehaviour
             for (int j = 1; j < 5; j++)
             {
                 AssignedCoursesContentPanel.transform.GetChild(i - j).transform.gameObject.GetComponent<RectTransform>().SetParent(RecentlyAssignedCourses.transform);
+                RecentlyAssignedCourses.transform.GetChild(j - 1).transform.gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
             }
         }
-        
-
-        //foreach(Transform t in RecentlyAssignedCourses.transform)
-        //{
-        //    Destroy(t.gameObject);
-        //}
-
-        //for (int i = 1; i <= ShowNumberofRecentlyAssignedCourses; i++)
-        //{
-        //    if (AssignedCoursesContentPanel.transform.childCount >= i)
-        //    {
-        //        GameObject Card = (GameObject)Resources.Load("CourseAssignedCard");
-        //        var button = Instantiate(Card, transform.position, transform.rotation);
-
-        //        button.GetComponent<RectTransform>().SetParent(RecentlyAssignedCourses.transform);
-        //        button.transform.localScale = new Vector3(1, 1, 1);
-
-        //        button.name = AssignedCoursesContentPanel.transform.GetChild(AssignedCoursesContentPanel.transform.childCount - i).GetComponent<AssignedCardDataDetails>().CourseName;
-        //        button.GetComponent<AssignedCardDataDetails>().CourseName = AssignedCoursesContentPanel.transform.GetChild(AssignedCoursesContentPanel.transform.childCount - i).GetComponent<AssignedCardDataDetails>().CourseName;
-        //        button.GetComponent<AssignedCardDataDetails>().CourseDescription = AssignedCoursesContentPanel.transform.GetChild(AssignedCoursesContentPanel.transform.childCount - i).GetComponent<AssignedCardDataDetails>().CourseDescription;
-        //        button.GetComponent<AssignedCardDataDetails>().CourseURL = AssignedCoursesContentPanel.transform.GetChild(AssignedCoursesContentPanel.transform.childCount - i).GetComponent<AssignedCardDataDetails>().CourseURL;
-        //        button.GetComponent<AssignedCardDataDetails>().CourseIcon = AssignedCoursesContentPanel.transform.GetChild(AssignedCoursesContentPanel.transform.childCount - i).GetComponent<AssignedCardDataDetails>().CourseIcon;
-        //        button.GetComponent<AssignedCardDataDetails>().CourseLevel.text = AssignedCoursesContentPanel.transform.GetChild(AssignedCoursesContentPanel.transform.childCount - i).GetComponent<AssignedCardDataDetails>().CourseLevel.text;
-        //    }
-        //}
     }
 
     public void SetAllCourses()
@@ -106,20 +75,20 @@ public class ContentManager : MonoBehaviour
             {
                 RecentlyAssignedCourses.transform.GetChild(i - j).transform.gameObject.GetComponent<RectTransform>().SetParent(AssignedCoursesContentPanel.transform);
             }
+
+            for(int a = 0; a < AssignedCoursesContentPanel.transform.childCount; a++)
+            {
+                AssignedCoursesContentPanel.transform.GetChild(a).transform.gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+            }
         }     
     }
     public void LoadAllAssignedCourses()
-    {
-        int i = 0;
-        foreach (var c in UserData.Instance.CourseDocumnets)
+    {       
+        NumberOfAssignedCourses = UserData.Instance.CourseDocumnets.Count;
+        NumberofAssignedCoursesText.text = "( " + NumberOfAssignedCourses.ToString() + " )";
+        if (NumberOfAssignedCourses > 0)
         {
-            i++;
-        }
-        NumberOfAssignedCourses = i;
-        NumberofAssignedCoursesText.text = "( " + i + " )";
-        if (i > 0)
-        {
-            for (int j = 0; j < i; j++)
+            for (int j = 0; j < NumberOfAssignedCourses; j++)
             {
                 CourseName = UserData.Instance.CourseDocumnets[j]["moduleName"].ToString();
                 CourseDescription = UserData.Instance.CourseDocumnets[j]["description"].ToString();
@@ -133,78 +102,6 @@ public class ContentManager : MonoBehaviour
             }
         }
     }
-
-    //OLD Structure Code//
-    //void ShowHomeScreenCourses()
-    //{
-    //    for (int i = 1; i <= ShowNumberofRecentlyAssignedCourses; i++)
-    //    {
-    //        if (NumberOfAssignedCourses >= i)
-    //        {
-    //            CourseName = UserData.Instance.UserDocument["assignedcourses"][NumberOfAssignedCourses - i]["name"].ToString();
-    //            CourseDescription = UserData.Instance.UserDocument["assignedcourses"][NumberOfAssignedCourses - i]["description"].ToString();
-    //            CourseURL = UserData.Instance.UserDocument["assignedcourses"][NumberOfAssignedCourses - i]["link"].ToString();
-    //            CourseIconURL = UserData.Instance.UserDocument["assignedcourses"][NumberOfAssignedCourses - i]["icon"].ToString();
-
-    //            GameObject Card = (GameObject)Resources.Load("CourseAssignedCard");
-    //            var button = Instantiate(Card, transform.position, transform.rotation);
-
-    //            button.GetComponent<RectTransform>().SetParent(RecentlyAssignedCourses.transform);
-    //            button.transform.localScale = new Vector3(1, 1, 1);
-
-    //            button.name = CourseName;
-    //            button.GetComponent<AssignedCardDataDetails>().CourseName = CourseName;
-    //            button.GetComponent<AssignedCardDataDetails>().CourseDescription = CourseDescription;
-    //            button.GetComponent<AssignedCardDataDetails>().CourseURL = CourseURL;
-    //            button.GetComponent<AssignedCardDataDetails>().CourseIcon = CourseIconURL;
-    //        }
-    //    }
-
-    //    for (int i = 1; i <= ShowNumberofContinueLearningCourses; i++)
-    //    {
-    //        if (NumberOfPendingCourses >= i)
-    //        {
-    //            CourseName = UserData.Instance.UserDocument["pendingcourses"][NumberOfPendingCourses - i]["name"].ToString();
-    //            CourseDescription = UserData.Instance.UserDocument["pendingcourses"][NumberOfPendingCourses - i]["description"].ToString();
-    //            CourseURL = UserData.Instance.UserDocument["pendingcourses"][NumberOfPendingCourses - i]["link"].ToString();
-    //            CourseIconURL = UserData.Instance.UserDocument["pendingcourses"][NumberOfPendingCourses - i]["icon"].ToString();
-
-    //            GameObject Card = (GameObject)Resources.Load("CoursePendingCard");
-    //            var button = Instantiate(Card, transform.position, transform.rotation);
-
-    //            button.GetComponent<RectTransform>().SetParent(ContinueLearningCourses.transform);
-    //            button.transform.localScale = new Vector3(1, 1, 1);
-
-    //            button.name = CourseName;
-    //            button.GetComponent<AssignedCardDataDetails>().CourseName = CourseName;
-    //            button.GetComponent<AssignedCardDataDetails>().CourseDescription = CourseDescription;
-    //            button.GetComponent<AssignedCardDataDetails>().CourseURL = CourseURL;
-    //            button.GetComponent<AssignedCardDataDetails>().CourseIcon = CourseIconURL;
-    //        }
-    //    }
-    //}
-
-    //public void ShowAllContentCourses()
-    //{
-    //    GetAllCardsData("assignedcourses", NumberOfAssignedCourses, "AssignedScrollView", "CourseAssignedCard", AssignedCoursesPanel);
-    //    GetAllCardsData("pendingcourses", NumberOfPendingCourses, "PendingScrollView", "CoursePendingCard", PendingCoursesPanel);
-    //    GetAllCardsData("completedcourses", NumberOfCompletedCourses, "CompletedScrollView", "CourseCompletedCard", CompletedCoursesPanel);
-    //}
-
-    //void GetAllCardsData(string coursestype, int numberofcardsineachtype, string CoursescrollviewName, string coursescardtype, GameObject panel)
-    //{
-    //    for (int i = 0; i < numberofcardsineachtype; i++)
-    //    {
-    //        CourseName = UserData.Instance.UserDocument[coursestype][i]["name"].ToString();
-    //        CourseDescription = UserData.Instance.UserDocument[coursestype][i]["description"].ToString();
-    //        CourseURL = UserData.Instance.UserDocument[coursestype][i]["link"].ToString();
-    //        CourseIconURL = UserData.Instance.UserDocument[coursestype][i]["icon"].ToString();
-
-    //        ArrangeAllCards(CoursescrollviewName, coursescardtype, panel);
-
-    //        SearchField.CoursesNames.Add(CourseName);
-    //    }
-    //}
 
     void ArrangeAllCards(GameObject g, string coursecardtype)
     {
@@ -343,7 +240,79 @@ public class ContentManager : MonoBehaviour
                 NumberOfAssignedCourses = i;
                 ShowAllHomeScreenCourses();
             }
-
         }
+    }
+
+    public void RetryAppInstalledorNot()
+    {
+        //if (IsApplictionInstalled("SteamVR"))
+        SteamVRAppNotInstalledPanel.SetActive(false);
+    }
+
+    public bool IsApplictionInstalled(string p_name)
+    {
+        string displayName;
+        RegistryKey key;
+
+        // search in: CurrentUser
+        key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
+        foreach (String keyName in key.GetSubKeyNames())
+        {
+            RegistryKey subkey = key.OpenSubKey(keyName);
+            displayName = subkey.GetValue("DisplayName") as string;
+            if (p_name.Equals(displayName, StringComparison.OrdinalIgnoreCase) == true)
+            {
+                return true;
+            }
+        }
+
+        // search in: LocalMachine_32
+        key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
+        foreach (String keyName in key.GetSubKeyNames())
+        {
+            RegistryKey subkey = key.OpenSubKey(keyName);
+            displayName = subkey.GetValue("DisplayName") as string;
+            if (p_name.Equals(displayName, StringComparison.OrdinalIgnoreCase) == true)
+            {
+                return true;
+            }
+        }
+
+        // search in: LocalMachine_64
+        key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall");
+        foreach (String keyName in key.GetSubKeyNames())
+        {
+            RegistryKey subkey = key.OpenSubKey(keyName);
+            displayName = subkey.GetValue("DisplayName") as string;
+            if (p_name.Equals(displayName, StringComparison.OrdinalIgnoreCase) == true)
+            {
+                return true;
+            }
+        }
+
+        // NOT FOUND
+        return false;
+    }
+
+    public void InterNetSpeed()
+    {
+        PlayerPrefs.SetInt("InterNetSpeedShow", 1);
+        InternetSpeedPanel.SetActive(false);
+    }
+
+    public double CheckSpeed()
+    {
+        double[] speeds = new double[5];
+        for (int i = 0; i < 5; i++)
+        {
+            int FileSize = 21; //Size of File in KB.
+            WebClient client = new WebClient();
+            DateTime startTime = DateTime.Now;
+            client.DownloadFile("https://autoxr-admin.s3.us-west-1.amazonaws.com/AssembleLearn.png", @Application.dataPath + "/speedtest.png");
+            DateTime endTime = DateTime.Now;
+            speeds[i] = Math.Round((FileSize / (endTime - startTime).TotalSeconds));
+        }
+        Debug.Log(string.Format("Download Speed: {0}MB/s", speeds.Average() / 1000));
+        return speeds.Average() / 1000;
     }
 }

@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientGroundColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 3
+  m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 4c054e77771d4914ca7ba1ab8b3dbaf0, type: 2}
   m_HaloStrength: 0.5
@@ -26826,6 +26826,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: Tutorial
       objectReference: {fileID: 0}
+    - target: {fileID: 1030113519, guid: 47d5ad935c67b2b4b90fb41b18e67613, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030113521, guid: 47d5ad935c67b2b4b90fb41b18e67613, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030113521, guid: 47d5ad935c67b2b4b90fb41b18e67613, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Tutorial
+      objectReference: {fileID: 0}
     - target: {fileID: 1886157871, guid: 47d5ad935c67b2b4b90fb41b18e67613, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -26838,22 +26850,14 @@ PrefabInstance:
       propertyPath: handType
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 1030113519, guid: 47d5ad935c67b2b4b90fb41b18e67613, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 1886157871, guid: 47d5ad935c67b2b4b90fb41b18e67613, type: 3}
+      propertyPath: renderSkybox
+      value: 
+      objectReference: {fileID: 2100000, guid: 4c054e77771d4914ca7ba1ab8b3dbaf0, type: 2}
     - target: {fileID: 975526482555360958, guid: 47d5ad935c67b2b4b90fb41b18e67613,
         type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1030113521, guid: 47d5ad935c67b2b4b90fb41b18e67613, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1030113521, guid: 47d5ad935c67b2b4b90fb41b18e67613, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: Tutorial
       objectReference: {fileID: 0}
     - target: {fileID: 5445920553470636350, guid: 47d5ad935c67b2b4b90fb41b18e67613,
         type: 3}

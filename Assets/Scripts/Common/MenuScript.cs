@@ -15,6 +15,7 @@ public class MenuScript : MonoBehaviour
 
     public GameObject pauseMenuUI, PausePanelOnTab;
 
+    public Material renderSkybox;
     void Start()
     {
         MenuAction.AddOnStateDownListener(TriggerDown, handType);
@@ -73,6 +74,7 @@ public class MenuScript : MonoBehaviour
         IsPaused = false;
         Time.timeScale = 1f;
         AudioListener.pause = false;
+        RenderSettings.skybox = renderSkybox;
         this.StartCoroutine(this.LoadVisor("", false, scenename));
     }
 

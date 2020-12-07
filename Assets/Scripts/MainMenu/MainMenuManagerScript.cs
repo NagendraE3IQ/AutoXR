@@ -154,16 +154,6 @@ public class MainMenuManagerScript : MonoBehaviour
             ButtonGO = null;
         }
     }
-
-    //private void OnApplicationFocus(bool focus)
-    //{
-    //    Debug.Log("isFocus " + focus);
-    //}
-
-    //private void OnApplicationPause(bool pause)
-    //{
-    //    Debug.Log("isPause " + pause);
-    //}
 }
 
 

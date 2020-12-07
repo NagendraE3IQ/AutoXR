@@ -106,4 +106,10 @@ public class LoginManagerScript : MonoBehaviour
         Password.DeactivateInputField();
         Password.ActivateInputField();
     }
+
+    //Delete PlayerPrefs
+    public void DeleteCache()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 }

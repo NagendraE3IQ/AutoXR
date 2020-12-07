@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using System.Net.NetworkInformation;
+using System.Net;
 
 public class UserData : MonoBehaviour
 {
@@ -32,25 +34,56 @@ public class UserData : MonoBehaviour
     [HideInInspector]
     public List<BsonDocument> CourseDocumnets;
 
+    public GameObject NoInternetConnectionPopup;
     public static UserData Instance;
 
+    bool InternetConnection = false;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Instance = this;
 
-        MongoClient DbClient = new MongoClient(ServerConnectionURL);
-        DataBase = DbClient.GetDatabase(DatabseName);
-
-        CourseDataCollection = DataBase.GetCollection<BsonDocument>(CourseDataCollectionName);
-        DepartmentDataCollection = DataBase.GetCollection<BsonDocument>(DepartmentDataCollectionName);
-        UserDataCollection = DataBase.GetCollection<BsonDocument>(UserDataCollectionName);
-        AdminDataCollection = DataBase.GetCollection<BsonDocument>(AdminDataCollectionName);
-
+        OnInit();
         DontDestroyOnLoad(this);
 
         //InsertDoc();
+    }
+
+    public void OnInit()
+    {
+        if (chkconnection())
+        {
+            MongoClient DbClient = new MongoClient(ServerConnectionURL);
+            DataBase = DbClient.GetDatabase(DatabseName);
+
+            CourseDataCollection = DataBase.GetCollection<BsonDocument>(CourseDataCollectionName);
+            DepartmentDataCollection = DataBase.GetCollection<BsonDocument>(DepartmentDataCollectionName);
+            UserDataCollection = DataBase.GetCollection<BsonDocument>(UserDataCollectionName);
+            AdminDataCollection = DataBase.GetCollection<BsonDocument>(AdminDataCollectionName);
+
+            NoInternetConnectionPopup.SetActive(false);
+        }
+        else
+        {
+            NoInternetConnectionPopup.SetActive(true);
+        }
+    }
+
+    bool chkconnection()
+    {
+        try
+        {
+            using (var client = new WebClient())
+            using (var stream = client.OpenRead("http://www.google.com"))
+            {
+                return true;
+            }
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     public void GetUserData()

@@ -6,38 +6,23 @@ using UnityEngine.Video;
 
 public class ThreeDimVideo : MonoBehaviour
 {
-    //public RenderTexture rt;
-
     public MenuScript PauseScript;
-    public VideoClip[] videoclips;
-    //public AudioClip[] audioclips;
 
     VideoPlayer vp;
-    //AudioSource Audsource;
-    //int v;
+    public Material renderSkybox;
+    public static ThreeDimVideo Instance;
+
     private void Awake()
     {
+        Instance = this;
+        RenderSettings.skybox = renderSkybox;
         vp = GetComponent<VideoPlayer>();
-        VideoClip v = (VideoClip)Resources.Load("ConstructionVideo");
-        vp.clip = v;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        //vp = GetComponent<VideoPlayer>();
-        //Audsource = GetComponent<AudioSource>();
-
-        //v = Random.Range(0, videoclips.Length);
-        //vp.clip = videoclips[0];
-
-        //if (audioclips[0])
-        //Audsource.clip = audioclips[0];
-        //else
-        //Audsource.clip = null;
-
-        //rt = new RenderTexture(1024, 1024, 2);
-        //vp.targetTexture = rt;
+        VideoClip v = (VideoClip)Resources.Load(PlayerPrefs.GetString("ThreeDimVideo"));
+        vp.clip = v;
     }
 
     // Update is called once per frame
@@ -46,12 +31,10 @@ public class ThreeDimVideo : MonoBehaviour
        if(PauseScript.IsPaused)
         {
             vp.Pause();
-            //Audsource.Pause();
         }
        else
         {
             vp.Play();
-            //Audsource.Play();
         }
     }
 }

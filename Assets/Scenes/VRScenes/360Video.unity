@@ -1308,7 +1308,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PauseScript: {fileID: 2073717955}
-  videoclips: []
+  LoadVideoPath: 
+  renderSkybox: {fileID: 2100000, guid: 03fed881407f98247be0c71cf11c6d5e, type: 2}
 --- !u!4 &1660869098
 Transform:
   m_ObjectHideFlags: 0
@@ -1471,3 +1472,4 @@ MonoBehaviour:
   IsPaused: 0
   pauseMenuUI: {fileID: 1400911438}
   PausePanelOnTab: {fileID: 1396906070}
+  renderSkybox: {fileID: 2100000, guid: 4c054e77771d4914ca7ba1ab8b3dbaf0, type: 2}
