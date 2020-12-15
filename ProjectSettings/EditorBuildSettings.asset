@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/VRScenes/360Video.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/MultiplayertestRoomID.unity
+    guid: 905d350775167b34eaca70becfe7c61f
+  - enabled: 1
+    path: Assets/Scenes/3DviewerMenuScene.unity
+    guid: cdedcd293416c7d439dc70f59b565893
   m_configObjects: {}

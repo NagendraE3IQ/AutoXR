@@ -33,7 +33,7 @@ public class AssignedCardDataDetails : MonoBehaviour
 #if UNITY_EDITOR
         if (CourseURLExtension == ".zip" || CourseURLExtension == ".obj" || CourseURLExtension == ".fbx")
         {
-            CoursesStorePath = @"D:\NagendraBuilds\Newfolder";
+            CoursesStorePath = @"H:\NagendraBuilds\Newfolder";
         }
         else
         {
@@ -143,7 +143,7 @@ public class AssignedCardDataDetails : MonoBehaviour
         while (!request.isDone)
         {
             ProgressBar.value = request.downloadProgress;
-            UnityEngine.Debug.Log(request.downloadProgress);
+          //  UnityEngine.Debug.Log(request.downloadProgress);
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -210,12 +210,17 @@ public class AssignedCardDataDetails : MonoBehaviour
                 {
                     UnityEngine.Debug.Log(CourseURLExtension);
                     GameObject g = Camera.main.gameObject;
-                    g.GetComponent<SteamVR_LoadLevel>().levelName = "3DViwer";
+                   PlayerPrefs.SetString("3DViewerModelPath", CoursesStorePath + "/" + cn + CourseURLExtension);
+                g.GetComponent<SteamVR_LoadLevel>().levelName = "3DviewerMenuScene";
                     g.GetComponent<SteamVR_LoadLevel>().enabled = true;
-                }
+                MainMenuManagerScript.Instance.SceneObjects.transform.localScale = new Vector3(0, 0, 0);
 
 
-                isAnyCourseOpened = true;
+            }
+
+
+
+            isAnyCourseOpened = true;
                 Invoke("HideContentLoadingPanel", 15);
             }
         //}
@@ -288,7 +293,7 @@ public class AssignedCardDataDetails : MonoBehaviour
                 seconds = DateTime.Now.Second;
             }
 
-            SetSpendtimeOnCourse();
+           // SetSpendtimeOnCourse();
         }      
     }
 

@@ -31,6 +31,7 @@ namespace Valve.VR.InteractionSystem
 
         protected Interactable interactable;
 
+
         protected virtual void Awake()
         {
             mappingChangeSamples = new float[numMappingChangeSamples];
@@ -104,44 +105,43 @@ namespace Valve.VR.InteractionSystem
 
         protected void UpdateLinearMapping( Transform updateTransform )
 		{
-                prevMapping = linearMapping.value;
-                linearMapping.value = Mathf.Clamp01(initialMappingOffset + CalculateLinearMapping(updateTransform));
+			prevMapping = linearMapping.value;
+			linearMapping.value = Mathf.Clamp01( initialMappingOffset + CalculateLinearMapping( updateTransform ) );
 
-                mappingChangeSamples[sampleCount % mappingChangeSamples.Length] = (1.0f / Time.deltaTime) * (linearMapping.value - prevMapping);
-                sampleCount++;
+			mappingChangeSamples[sampleCount % mappingChangeSamples.Length] = ( 1.0f / Time.deltaTime ) * ( linearMapping.value - prevMapping );
+			sampleCount++;
 
-                if (repositionGameObject)
-                {
-                    transform.position = Vector3.Lerp(startPosition.position, endPosition.position, linearMapping.value);
-                }
+			if ( repositionGameObject )
+			{
+				transform.position = Vector3.Lerp( startPosition.position, endPosition.position, linearMapping.value );
+			}
 		}
 
         protected float CalculateLinearMapping( Transform updateTransform )
-		{            
-                Vector3 direction = endPosition.position - startPosition.position;
-                float length = direction.magnitude;
-                direction.Normalize();
+		{
+			Vector3 direction = endPosition.position - startPosition.position;
+			float length = direction.magnitude;
+			direction.Normalize();
 
-                Vector3 displacement = updateTransform.position - startPosition.position;
-         
-                return Vector3.Dot(displacement, direction) / length;       
+			Vector3 displacement = updateTransform.position - startPosition.position;
+
+			return Vector3.Dot( displacement, direction ) / length;
 		}
 
 
 		protected virtual void Update()
         {
-            
-                if (maintainMomemntum && mappingChangeRate != 0.0f)
-                {
-                    //Dampen the mapping change rate and apply it to the mapping
-                    mappingChangeRate = Mathf.Lerp(mappingChangeRate, 0.0f, momemtumDampenRate * Time.deltaTime);
-                    linearMapping.value = Mathf.Clamp01(linearMapping.value + (mappingChangeRate * Time.deltaTime));
+            if ( maintainMomemntum && mappingChangeRate != 0.0f )
+			{
+				//Dampen the mapping change rate and apply it to the mapping
+				mappingChangeRate = Mathf.Lerp( mappingChangeRate, 0.0f, momemtumDampenRate * Time.deltaTime );
+				linearMapping.value = Mathf.Clamp01( linearMapping.value + ( mappingChangeRate * Time.deltaTime ) );
 
-                    if (repositionGameObject)
-                    {
-                        transform.position = Vector3.Lerp(startPosition.position, endPosition.position, linearMapping.value);
-                    }
-                }
+				if ( repositionGameObject )
+				{
+					transform.position = Vector3.Lerp( startPosition.position, endPosition.position, linearMapping.value );
+				}
+			}
 		}
 	}
 }

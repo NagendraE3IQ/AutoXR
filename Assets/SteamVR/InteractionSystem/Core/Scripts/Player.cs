@@ -251,7 +251,7 @@ namespace Valve.VR.InteractionSystem
 
 		//-------------------------------------------------
 		private void Awake()
-		{            
+		{
 			if ( trackingOriginTransform == null )
 			{
 				trackingOriginTransform = this.transform;
@@ -412,6 +412,5 @@ namespace Valve.VR.InteractionSystem
 		{
 			//Do something appropriate here
 		}
-
 	}
 }

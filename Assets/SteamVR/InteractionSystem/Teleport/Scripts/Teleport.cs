@@ -1084,7 +1084,7 @@ namespace Valve.VR.InteractionSystem
 
 
 		//-------------------------------------------------
-		public bool WasTeleportButtonReleased( Hand hand )
+		private bool WasTeleportButtonReleased( Hand hand )
 		{
 			if ( IsEligibleForTeleport( hand ) )
 			{
@@ -1123,7 +1123,7 @@ namespace Valve.VR.InteractionSystem
 
 
 		//-------------------------------------------------
-		public bool WasTeleportButtonPressed( Hand hand )
+		private bool WasTeleportButtonPressed( Hand hand )
 		{
 			if ( IsEligibleForTeleport( hand ) )
 			{

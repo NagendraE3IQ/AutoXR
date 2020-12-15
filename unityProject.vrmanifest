@@ -2,10 +2,10 @@
   "source": "Unity",
   "applications": [
     {
-      "app_key": "application.generated.unity.steam.exe",
+      "app_key": "application.generated.unity.autoxr.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "D:\\Nagendra\\LMSGIT\\AutoXR\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "action_manifest_path": "H:\\Office Projects\\GITProjects\\AutoXR\\Assets\\StreamingAssets\\SteamVR\\actions.json",
       "strings": {
         "en_us": {
           "name": "AutoXR [Testing]"

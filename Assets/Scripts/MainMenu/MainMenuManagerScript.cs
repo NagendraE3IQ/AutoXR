@@ -17,7 +17,9 @@ public class MainMenuManagerScript : MonoBehaviour
 
     public TextMeshProUGUI TopHeaderUserName;
     public GameObject SceneObjects;
-    
+    public GameObject MainMenuUICanvas;
+
+
     Sprite ButtonHighlightImage, CurrentSettingsTabSprite, HighlightSettingsTabSprite;
 
     [Header("PROFILE")]
