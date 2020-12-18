@@ -288,7 +288,7 @@ public class AssignedCardDataDetails : MonoBehaviour
                 seconds = DateTime.Now.Second;
             }
 
-            SetSpendtimeOnCourse();
+            //SetSpendtimeOnCourse();
         }      
     }
 
