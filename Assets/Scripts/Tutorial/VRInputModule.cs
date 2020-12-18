@@ -19,6 +19,7 @@ public class VRInputModule : BaseInputModule
     protected override void Awake()
     {
         base.Awake();
+
         pointerdata = new PointerEventData(eventSystem);       
     }
 

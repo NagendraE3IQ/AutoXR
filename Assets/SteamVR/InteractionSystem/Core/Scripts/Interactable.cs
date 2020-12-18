@@ -14,6 +14,7 @@ namespace Valve.VR.InteractionSystem
     //-------------------------------------------------------------------------
     public class Interactable : MonoBehaviour
     {
+        public bool IsLocallyControlled = true;
         [Tooltip("Activates an action set on attach and deactivates on detach")]
         public SteamVR_ActionSet activateActionSetOnAttach;
 
@@ -243,6 +244,8 @@ namespace Valve.VR.InteractionSystem
         /// </summary>
         protected virtual void OnHandHoverBegin(Hand hand)
         {
+            if(!IsLocallyControlled)
+            {
             wasHovering = isHovering;
             isHovering = true;
 
@@ -253,7 +256,10 @@ namespace Valve.VR.InteractionSystem
                 CreateHighlightRenderers();
                 UpdateHighlightRenderers();
             }
+            }
+          
         }
+
 
 
         /// <summary>
